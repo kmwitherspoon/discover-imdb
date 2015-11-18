@@ -19,7 +19,6 @@ module.exports = Backbone.View.extend({
   el: '.container',
   events: {
     'submit form': 'submitForm',
-    'button .delete': 'deleteMovie',
     'button .edit': 'editMovie'
   },
   submitForm: function (event) {
@@ -47,11 +46,7 @@ module.exports = Backbone.View.extend({
     _.each(this.collection.models, this.addOne, this);
 
   },
-  deleteMovie : function() {
-   var _id = this.model.attributes._id;
-   console.log(_id);
-   this.model.destroy(_id);
- },
+
  // editMovie: function(){
  //   var _id = this.model.attributes._id;
  //   this.model.
@@ -87,13 +82,20 @@ module.exports = Backbone.View.extend({
   className: 'movies',
   template: _.template($('#imdbTmpl').html()),
   events: {
+    'click .delete': 'deleteMovie'
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
     this.$el.html(markup);
     return this;
   },
-  initialize: function () {}
+  initialize: function () {
+
+  },
+  deleteMovie : function() {
+   this.model.destroy();
+   this.remove();
+ }
 
 });
 

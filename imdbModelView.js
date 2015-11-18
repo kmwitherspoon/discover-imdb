@@ -8,12 +8,19 @@ module.exports = Backbone.View.extend({
   className: 'movies',
   template: _.template($('#imdbTmpl').html()),
   events: {
+    'click .delete': 'deleteMovie'
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
     this.$el.html(markup);
     return this;
   },
-  initialize: function () {}
+  initialize: function () {
+
+  },
+  deleteMovie : function() {
+   this.model.destroy();
+   this.remove();
+ }
 
 });

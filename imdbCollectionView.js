@@ -9,7 +9,6 @@ module.exports = Backbone.View.extend({
   el: '.container',
   events: {
     'submit form': 'submitForm',
-    'button .delete': 'deleteMovie',
     'button .edit': 'editMovie'
   },
   submitForm: function (event) {
@@ -37,11 +36,7 @@ module.exports = Backbone.View.extend({
     _.each(this.collection.models, this.addOne, this);
 
   },
-  deleteMovie : function() {
-   var _id = this.model.attributes._id;
-   console.log(_id);
-   this.model.destroy(_id);
- },
+
  // editMovie: function(){
  //   var _id = this.model.attributes._id;
  //   this.model.
