@@ -8,12 +8,14 @@
   <link rel="stylesheet" href="styles.css">
   <script type="text/html" id="imdbTmpl">
   <div class=" movie col-md-4">
-    <img class="cover" src ="<%= cover_url %>">
-    <p class="title"><%= title %></p>
-    <p class="release"><%= release %></p>
-    <p class="plot"><%= plot%></p>
-    <p class="rating"><%= rating %></p>
-    <div class="buttons">
+    <img class="cover col-md-2" src ="<%= cover_url %>">
+    <div class="movie-text col-md-2">
+      <p class="title"><%= title %></p>
+      <p class="release"><%= release %></p>
+      <p class="plot"><%= plot%></p>
+      <p class="rating"><%= rating %></p>
+    </div>
+    <div class="buttons col-md-12">
       <button type="button" name="delete" class="delete" src="<%= _id%>">Delete</button>
       <button type="button" name="edit" class="edit" src="">Edit</button>
     </div>
