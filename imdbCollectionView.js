@@ -31,21 +31,9 @@ module.exports = Backbone.View.extend({
     _.each(this.collection.models, this.addOne, this);
 
   },
-
-
-  // createMovie: function() {
-  //   $(".submit-section").on('submit', function(event){
-  //     event.preventDefault();
-  //   var newMovie = new ImdbModel({
-  //     title: $('input[name="title"]').val(),
-  //     release: $('input[name="release"]').val(),
-  //     cover_url: $('input[name="cover_url"]').val(),
-  //     plot: $('input[name="plot"]').val(),
-  //     rating: $('input[name="rating"]').val(),
-  //
-  //   });
-  //   newMovie.save();
-  //   imdbPage.loadMovies;
-  // })
-// }
+  deleteMovie : function() {
+   var _id = this.model.attributes._id;
+   console.log(_id);
+   this.model.destroy(_id);
+ }
 });
