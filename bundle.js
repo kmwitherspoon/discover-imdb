@@ -16,7 +16,7 @@ var ImdbView = require('./imdbModelView');
 var ImdbModel = require('./imdbModel');
 
 module.exports = Backbone.View.extend({
-  el: '#imdbTmpl',
+  el: '.container',
   events: {
     'submit form': 'submitForm',
   },
