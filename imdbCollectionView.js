@@ -7,9 +7,20 @@ var ImdbView = require('./imdbModelView');
 module.exports = Backbone.View.extend({
   el: '#imdbTmpl',
   events: {
-    'submit form': 'createInputBox',
-
-    // 'submit form': 'submitForm'
+    'submit form': 'submitForm',
+  },
+  submitForm: function () {
+    var newMovie = {
+      title: this.$el.find('input[name="title"]').val(),
+      release: this.$el.find('input[name="release"]').val(),
+      cover_url: this.$el.find('input[name="cover_url"]').val(),
+      plot: this.$el.find('input[name="plot"]').val(),
+      rating: this.$el.find('input[name="rating"]').val(),
+    };
+    var newModel = new ImdbModel(newMovie);
+    newModel.save();
+    this.collection.add(newModel);
+    this.addOne(newModel);
   },
   addOne: function (imdbModel) {
     var imdbView = new ImdbView({model: imdbModel});
@@ -20,14 +31,6 @@ module.exports = Backbone.View.extend({
 
   },
 
-  createInputBox: function(ImdbView){
-    $(".submit-section").append('<form><input type="text name="title" value="Title"/>' +
-              '<input type="text" name="release" value="Release year">' +
-              '<input type="url" name="cover_url" value="Cover Url" />' +
-              '<input type="text" name="plot" value="Plot" />' +
-              '<input type="text" name="rating" value="Rating"/>' +
-              '<input type="submit" name="Submit" class="something" /></form>');
-  },
 
   // createMovie: function() {
   //   $(".submit-section").on('submit', function(event){
@@ -44,4 +47,4 @@ module.exports = Backbone.View.extend({
   //   imdbPage.loadMovies;
   // })
 // }
-}
+});

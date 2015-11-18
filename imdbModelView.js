@@ -9,7 +9,6 @@ module.exports = Backbone.View.extend({
   template: _.template($('#imdbTmpl').html()),
   events: {
   },
-
   render: function () {
     var markup = this.template(this.model.toJSON());
     this.$el.html(markup);
