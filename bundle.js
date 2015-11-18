@@ -1,0 +1,1 @@
+console.error("Error: Parsing file /Users/kmo232/Desktop/TIY/backbone-imdb/imdbCollectionView.js: Unexpected token (48:0)");
