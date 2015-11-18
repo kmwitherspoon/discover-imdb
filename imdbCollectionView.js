@@ -10,7 +10,8 @@ module.exports = Backbone.View.extend({
   events: {
     'submit form': 'submitForm',
   },
-  submitForm: function () {
+  submitForm: function (event) {
+    event.preventDefault();
     var newMovie = {
       title: this.$el.find('input[name="title"]').val(),
       release: this.$el.find('input[name="release"]').val(),
@@ -22,6 +23,9 @@ module.exports = Backbone.View.extend({
     newModel.save();
     this.collection.add(newModel);
     this.addOne(newModel);
+  },
+  initialize: function () {
+  this.addAll();
   },
   addOne: function (imdbModel) {
     var imdbView = new ImdbView({model: imdbModel});
