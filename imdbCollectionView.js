@@ -3,6 +3,7 @@ var Backbone = require('backbone');
 var _ = require('underscore');
 Backbone.$ = $;
 var ImdbView = require('./imdbModelView');
+var ImdbModel = require('./imdbModel');
 
 module.exports = Backbone.View.extend({
   el: '#imdbTmpl',

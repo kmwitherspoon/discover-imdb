@@ -13,6 +13,7 @@ var Backbone = require('backbone');
 var _ = require('underscore');
 Backbone.$ = $;
 var ImdbView = require('./imdbModelView');
+var ImdbModel = require('./imdbModel');
 
 module.exports = Backbone.View.extend({
   el: '#imdbTmpl',
@@ -59,7 +60,7 @@ module.exports = Backbone.View.extend({
 // }
 });
 
-},{"./imdbModelView":4,"backbone":6,"jquery":7,"underscore":8}],3:[function(require,module,exports){
+},{"./imdbModel":3,"./imdbModelView":4,"backbone":6,"jquery":7,"underscore":8}],3:[function(require,module,exports){
 var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
