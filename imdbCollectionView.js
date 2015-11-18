@@ -9,6 +9,8 @@ module.exports = Backbone.View.extend({
   el: '.container',
   events: {
     'submit form': 'submitForm',
+    'button .delete': 'deleteMovie',
+    'button .edit': 'editMovie'
   },
   submitForm: function (event) {
     event.preventDefault();
@@ -39,5 +41,9 @@ module.exports = Backbone.View.extend({
    var _id = this.model.attributes._id;
    console.log(_id);
    this.model.destroy(_id);
- }
+ },
+ // editMovie: function(){
+ //   var _id = this.model.attributes._id;
+ //   this.model.
+ // }
 });

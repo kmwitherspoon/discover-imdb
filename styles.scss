@@ -21,10 +21,47 @@ header {
 }
 
 .submit-section {
-  color: #677077;
-  font-family: 'Gravitas One', cursive;
   padding: 10px;
+  margin: 0 auto;
+  border-radius: 5px;
   input {
-    display: block;
+    color: #677077;
+    font-family: 'Gravitas One', cursive;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 15%;
+    height: 15%;
   }
+  .something {
+    color: #f2b632;
+    background-color: #252839
+  }
+}
+
+.container {
+  margin: 0 auto;
+  button {
+    color: #f2b632;
+    background-color: #252839;
+    font-family: 'Gravitas One', cursive;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+}
+
+.movies {
+  display: inline-block;
+  color: #252839;
+  font-family: 'Gravitas One', cursive;
+}
+.movie {
+  margin: 0 auto;
+  background-color: white;
+  display: inline-block;
+  color: #252839;
+  font-family: 'Gravitas One', cursive;
+  font-size: 12px;
+  max-width: 300px;
+  padding: 10px;
+  margin-left: 20px;
 }
