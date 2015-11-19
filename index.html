@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
   <link href='https://fonts.googleapis.com/css?family=Gravitas+One' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="styles.css">
-  <script type="text/html" id="imdbTmpl">
+  <!-- <script type="text/html" id="imdbTmpl">
   <div class=" movie col-md-4">
     <img class="cover col-md-2" src ="<%= cover_url %>">
     <div class="movie-text col-md-2">
@@ -20,23 +20,27 @@
       <button type="button" name="edit" class="edit" src="">Edit</button>
     </div>
   </div>
-  </script>
+  </script> -->
 </head>
 <body>
-  <header>
-    <h1>discover imdb<i class="fa fa-film"></i></h1>
-  </header>
-  <div class="container">
-    <section class="submit-section col-md-4">
-      <form class="moviePost">
-        <input type="text" name="title" value="Title"/>
-        <input type="text" name="release" value="Release year" />
-        <input type="url" name="cover_url" value="Cover Url" />
-        <input type="text" name="plot" value="Plot" />
-        <input type="text" name="rating" value="Rating"/>
-        <input type="submit" name="Submit" class="something" />
-      </form>
-    </section>
+  <div id="layoutView">
+    <header>
+      <!-- <h1>discover imdb<i class="fa fa-film"></i></h1> -->
+    </header>
+    <div class="container">
+      <section class="submit-section col-md-4">
+        <!-- <form class="moviePost">
+          <input type="text" name="title" value="Title"/>
+          <input type="text" name="release" value="Release year" />
+          <input type="url" name="cover_url" value="Cover Url" />
+          <input type="text" name="plot" value="Plot" />
+          <input type="text" name="rating" value="Rating"/>
+          <input type="submit" name="Submit" class="something" />
+        </form> -->
+      </section>
+    </div>
+    <footer>
+    </footer>
   </div>
   <script src="bundle.js" charset="utf-8"></script>
 </body>

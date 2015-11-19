@@ -1,25 +1,40 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var Backbone = require('backbone');
-var ImdbModel = require('./imdbModel');
+var $ = require('jquery');
+Backbone.$ = $;
+var _ = require('underscore');
+var tmpl = require('./templates');
 
-module.exports = Backbone.Collection.extend({
-  url: 'http://tiny-tiny.herokuapp.com/collections/discoverimdb',
-  model: ImdbModel
+module.exports = Backbone.View.extend({
+  initialize: function () {},
+  template: _.template(tmpl.footer),
+  render: function () {
+    var markup = this.template({});
+    this.$el.html(markup);
+    // in order to call .el off of render we need to return this
+    // bookViewInstance.render().el - yields all markup and data from model
+    return this;
+  }
 });
 
-},{"./imdbModel":3,"backbone":6}],2:[function(require,module,exports){
-var $ = require('jquery');
+},{"./templates":13,"backbone":10,"jquery":11,"underscore":12}],2:[function(require,module,exports){
 var Backbone = require('backbone');
-var _ = require('underscore');
+var $ = require('jquery');
 Backbone.$ = $;
-var ImdbView = require('./imdbModelView');
+var _ = require('underscore');
+var tmpl = require('./templates');
 var ImdbModel = require('./imdbModel');
 
 module.exports = Backbone.View.extend({
-  el: '.container',
+  className: 'addMovie',
+  model: null, // just here as placeholder, but need a model up on instantiation
   events: {
-    'submit form': 'submitForm',
-    'button .edit': 'editMovie'
+    'submit form': 'submitForm'
+  },
+  initialize: function () {
+    if(!this.model) {
+      this.model = new ImdbModel();
+    }
   },
   submitForm: function (event) {
     event.preventDefault();
@@ -30,17 +45,81 @@ module.exports = Backbone.View.extend({
       plot: this.$el.find('input[name="plot"]').val(),
       rating: this.$el.find('input[name="rating"]').val(),
     };
-    var newModel = new ImdbModel(newMovie);
-    newModel.save();
-    this.collection.add(newModel);
-    this.addOne(newModel);
+    this.model.set(newMovie);
+    this.model.save();
+    this.$el.find('input').val('');
   },
+  template: _.template(tmpl.form),
+  render: function () {
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    // in order to call .el off of render we need to return this
+    // bookViewInstance.render().el - yields all markup and data from model
+    return this;
+  }
+});
+
+},{"./imdbModel":6,"./templates":13,"backbone":10,"jquery":11,"underscore":12}],3:[function(require,module,exports){
+var Backbone = require('backbone');
+var $ = require('jquery');
+Backbone.$ = $;
+var _ = require('underscore');
+var tmpl = require('./templates');
+
+module.exports = Backbone.View.extend({
+  initialize: function () {},
+  template: _.template(tmpl.header),
+  render: function () {
+    var markup = this.template({});
+    this.$el.html(markup);
+    // in order to call .el off of render we need to return this
+    // bookViewInstance.render().el - yields all markup and data from model
+    return this;
+  }
+});
+
+},{"./templates":13,"backbone":10,"jquery":11,"underscore":12}],4:[function(require,module,exports){
+var Backbone = require('backbone');
+var ImdbModel = require('./imdbModel');
+
+module.exports = Backbone.Collection.extend({
+  url: 'http://tiny-tiny.herokuapp.com/collections/discoverimdb',
+  model: ImdbModel
+});
+
+},{"./imdbModel":6,"backbone":10}],5:[function(require,module,exports){
+var $ = require('jquery');
+var Backbone = require('backbone');
+var _ = require('underscore');
+Backbone.$ = $;
+var ImdbModelView = require('./imdbModelView');
+
+module.exports = Backbone.View.extend({
+  el: '.container',
+  events: {
+    // 'submit form': 'submitForm',
+    // 'button .edit': 'editMovie'
+  },
+  // submitForm: function (event) {
+  //   event.preventDefault();
+  //   var newMovie = {
+  //     title: this.$el.find('input[name="title"]').val(),
+  //     release: this.$el.find('input[name="release"]').val(),
+  //     cover_url: this.$el.find('input[name="cover_url"]').val(),
+  //     plot: this.$el.find('input[name="plot"]').val(),
+  //     rating: this.$el.find('input[name="rating"]').val(),
+  //   };
+  //   var newModel = new ImdbModel(newMovie);
+  //   newModel.save();
+  //   this.collection.add(newModel);
+  //   this.addOne(newModel);
+  // },
   initialize: function () {
   this.addAll();
   },
   addOne: function (imdbModel) {
-    var imdbView = new ImdbView({model: imdbModel});
-    this.$el.append(imdbView.render().el);
+    var imdbModelView = new ImdbModelView({model: imdbModel});
+    this.$el.append(imdbModelView.render().el);
   },
   addAll: function () {
     _.each(this.collection.models, this.addOne, this);
@@ -53,36 +132,40 @@ module.exports = Backbone.View.extend({
  // }
 });
 
-},{"./imdbModel":3,"./imdbModelView":4,"backbone":6,"jquery":7,"underscore":8}],3:[function(require,module,exports){
+},{"./imdbModelView":7,"backbone":10,"jquery":11,"underscore":12}],6:[function(require,module,exports){
 var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
   urlRoot: 'http://tiny-tiny.herokuapp.com/collections/discoverimdb',
   idAttribute: '_id',
-  defaults: {
-    title: "wall-e",
-    release: "2008",
-    cover_url: "http://1.bp.blogspot.com/_5Z7ZTxP6iIw/Sa-TjCKj5KI/AAAAAAAAAOM/Osj7TCLWIis/s400/wall-e.jpg",
-    plot: "In the distant future, a small waste collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.",
-    rating: "8.4 stars"
+  defaults: function (){
+    return {
+      title: "wall-e",
+      release: "2008",
+      cover_url: "http://1.bp.blogspot.com/_5Z7ZTxP6iIw/Sa-TjCKj5KI/AAAAAAAAAOM/Osj7TCLWIis/s400/wall-e.jpg",
+      plot: "In the distant future, a small waste collecting robot inadvertently embarks on a space journey that will ultimately decide the fate of mankind.",
+      rating: "8.4 stars"
+    };
   },
   initialize: function () {
     console.log("hello");
   }
 });
 
-},{"backbone":6}],4:[function(require,module,exports){
+},{"backbone":10}],7:[function(require,module,exports){
 var Backbone = require('backbone');
 var _ = require('underscore');
 var $ = require('jquery');
 Backbone.$ = $;
+var tmpl = require('./templates');
 
 module.exports = Backbone.View.extend({
   tagName: 'section',
   className: 'movies',
-  template: _.template($('#imdbTmpl').html()),
+  template: _.template(tmpl.movie),
   events: {
-    'click .delete': 'deleteMovie'
+    'click .delete': 'deleteMovie',
+    'click .edit': 'editMovie'
   },
   render: function () {
     var markup = this.template(this.model.toJSON());
@@ -95,26 +178,72 @@ module.exports = Backbone.View.extend({
   deleteMovie : function() {
    this.model.destroy();
    this.remove();
+ },
+ editMovie: function(){
+
+   this.model.stickit();
+   this.model.save();
  }
 
 });
 
-},{"backbone":6,"jquery":7,"underscore":8}],5:[function(require,module,exports){
+},{"./templates":13,"backbone":10,"jquery":11,"underscore":12}],8:[function(require,module,exports){
+var Backbone = require('backbone');
 var $ = require('jquery');
-var ImdbCollection = require('./imdbCollection');
+Backbone.$ = $;
+var _ = require('underscore');
+var HeaderView = require('./headerView');
+var FooterView = require('./footerView');
+var FormView = require('./formView');
 var ImdbCollectionView = require('./imdbCollectionView');
+var ImdbCollection = require('./imdbCollection');
+
+
+module.exports = Backbone.View.extend({
+  el: '#layoutView',
+  initialize: function () {
+    var self = this;
+    var headerHTML = new HeaderView();
+    var footerHTML = new FooterView();
+    var formHTML = new FormView();
+    var imdbCollection = new ImdbCollection();
+    imdbCollection.fetch().then(function () {
+      var imdbCollectionView = new ImdbCollectionView({collection: imdbCollection});
+      // self.$el.find('section').html()
+      self.$el.find('header').html(headerHTML.render().el);
+      self.$el.find('footer').html(footerHTML.render().el);
+      self.$el.find('.submit-section').html(formHTML.render().el);
+    });
+
+
+  }
+
+});
+
+},{"./footerView":1,"./formView":2,"./headerView":3,"./imdbCollection":4,"./imdbCollectionView":5,"backbone":10,"jquery":11,"underscore":12}],9:[function(require,module,exports){
+// var $ = require('jquery');
+// var ImdbCollection = require('./imdbCollection');
+// var ImdbCollectionView = require('./imdbCollectionView');
+//
+// $(function () {
+//   var moviesImdb = new ImdbCollection();
+//
+//   moviesImdb.fetch().then(function (data) {
+//     console.log("these are the photos: ", moviesImdb);
+//     new ImdbCollectionView({collection: moviesImdb});
+//
+//   });
+// })
+
+
+var $ = require('jquery');
+var layoutView = require('./layoutView');
 
 $(function () {
-  var moviesImdb = new ImdbCollection();
-
-  moviesImdb.fetch().then(function (data) {
-    console.log("these are the photos: ", moviesImdb);
-    new ImdbCollectionView({collection: moviesImdb});
-
-  });
+  new layoutView();
 })
 
-},{"./imdbCollection":1,"./imdbCollectionView":2,"jquery":7}],6:[function(require,module,exports){
+},{"./layoutView":8,"jquery":11}],10:[function(require,module,exports){
 (function (global){
 //     Backbone.js 1.2.3
 
@@ -2012,7 +2141,7 @@ $(function () {
 }));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"jquery":7,"underscore":8}],7:[function(require,module,exports){
+},{"jquery":11,"underscore":12}],11:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v2.1.4
  * http://jquery.com/
@@ -11224,7 +11353,7 @@ return jQuery;
 
 }));
 
-},{}],8:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 //     Underscore.js 1.8.3
 //     http://underscorejs.org
 //     (c) 2009-2015 Jeremy Ashkenas, DocumentCloud and Investigative Reporters & Editors
@@ -12774,4 +12903,39 @@ return jQuery;
   }
 }.call(this));
 
-},{}]},{},[5]);
+},{}],13:[function(require,module,exports){
+module.exports = {
+  movie: [
+    '<div class="movie col-md-4">',
+      '<img contenteditable="true" class="cover col-md-2" src ="<%= cover_url %>">',
+      '<div class="movie-text col-md-2">',
+        '<p contenteditable="true" class="title"><%= title %></p>',
+        '<p contenteditable="true" class="release"><%= release %></p>',
+        '<p contenteditable="true" class="plot"><%= plot%></p>',
+        '<p contenteditable="true" class="rating"><%= rating %></p>',
+      '</div>',
+      '<div class="buttons col-md-12">',
+        '<button type="button" name="delete" class="delete">Delete</button>',
+        '<button type="button" name="edit" class="edit" src="">Edit</button>',
+      '</div>',
+    '</div>',
+  ].join(""),
+  form: [
+    '<form class="moviePost">',
+      '<input type="text" name="title" value="Title"/>',
+      '<input type="text" name="release" value="Release year" />',
+      '<input type="url" name="cover_url" value="Cover Url" />',
+      '<input type="text" name="plot" value="Plot" />',
+      '<input type="text" name="rating" value="Rating"/>',
+      '<input type="submit" name="Submit" class="something" />',
+    '</form>'
+  ].join(""),
+  header: [
+    '<h1>discover imdb<i class="fa fa-film"></i></h1>',
+  ].join(""),
+  footer: [
+    '<p>&#169;2015 discover imdb</p>'
+  ].join("")
+};
+
+},{}]},{},[9]);
