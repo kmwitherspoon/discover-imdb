@@ -81,9 +81,26 @@ header {
 .hidden {
   display: none;
 }
-// .editted {
-//   background-color: white;
-//   font-family: 'Gravitas One', cursive;
-//   color: black;
-//   font-size: 16px;
-// }
+
+footer {
+  color: white;
+  background-color: #e62739;
+  margin: 0 auto;
+  height: 50px;
+  text-align: center;
+  margin-bottom: 0;
+  bottom:0;
+  width: 100%;
+}
+.editted {
+  input {
+  font-family: 'Gravitas One', cursive;
+  color: black;
+  font-size: 12px;
+  border-radius: 5px;
+}
+  .something {
+    color: white;
+    background-color: #e62739;
+  }
+}
