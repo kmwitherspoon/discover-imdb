@@ -63,3 +63,6 @@ header {
       float: right; }
     .movies .movie .buttons {
       clear: both; }
+
+.hidden {
+  display: none; }

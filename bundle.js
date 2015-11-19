@@ -165,12 +165,8 @@ module.exports = Backbone.View.extend({
   template: _.template(tmpl.movie),
   events: {
     'click .delete': 'deleteMovie',
-    'click .edit': 'editMovie'
-  },
-  render: function () {
-    var markup = this.template(this.model.toJSON());
-    this.$el.html(markup);
-    return this;
+    'click .edit': 'edit',
+    'submit .editted': 'editMovie'
   },
   initialize: function () {
 
@@ -179,12 +175,30 @@ module.exports = Backbone.View.extend({
    this.model.destroy();
    this.remove();
  },
- editMovie: function(){
-
-   this.model.stickit();
-   this.model.save();
- }
-
+ edit: function(e){
+    e.preventDefault();
+    this.$('.editted').toggleClass('hidden');
+  },
+ editMovie: function(event){
+   event.preventDefault();
+   var editText = this.model;
+   editText.set({
+     title: this.$('input[name="title"]').val(),
+     release: this.$('input[name="release"]').val(),
+     cover_url: this.$('input[name="cover_url"]').val(),
+     plot: this.$('input[name="plot"]').val(),
+     rating: this.$('input[name="rating"]').val(),
+   });
+   $('.editted').addClass('hidden');
+    editText.save();
+    this.render();
+  },
+  render: function () {
+    console.log(this.model);
+    var markup = this.template(this.model.toJSON());
+    this.$el.html(markup);
+    return this;
+  },
 });
 
 },{"./templates":13,"backbone":10,"jquery":11,"underscore":12}],8:[function(require,module,exports){
@@ -12907,18 +12921,26 @@ return jQuery;
 module.exports = {
   movie: [
     '<div class="movie col-md-4">',
-      '<img contenteditable="true" class="cover col-md-2" src ="<%= cover_url %>">',
+      '<img class="cover col-md-2" src ="<%= cover_url %>">',
       '<div class="movie-text col-md-2">',
-        '<p contenteditable="true" class="title"><%= title %></p>',
-        '<p contenteditable="true" class="release"><%= release %></p>',
-        '<p contenteditable="true" class="plot"><%= plot%></p>',
-        '<p contenteditable="true" class="rating"><%= rating %></p>',
+        '<p class="title"><%= title %></p>',
+        '<p class="release"><%= release %></p>',
+        '<p class="plot"><%= plot%></p>',
+        '<p class="rating"><%= rating %></p>',
       '</div>',
       '<div class="buttons col-md-12">',
         '<button type="button" name="delete" class="delete">Delete</button>',
         '<button type="button" name="edit" class="edit" src="">Edit</button>',
       '</div>',
-    '</div>',
+      '<form class="editted hidden">',
+        '<input type="text" name="title" value="Title"/>',
+        '<input type="text" name="release" value="Release year" />',
+        '<input type="url" name="cover_url" value="Cover Url" />',
+        '<input type="text" name="plot" value="Plot" />',
+        '<input type="text" name="rating" value="Rating"/>',
+        '<input type="submit" name="Submit" class="something" />',
+      '</form>',
+    '</div>'
   ].join(""),
   form: [
     '<form class="moviePost">',
