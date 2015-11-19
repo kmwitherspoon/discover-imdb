@@ -97,23 +97,9 @@ var ImdbModelView = require('./imdbModelView');
 module.exports = Backbone.View.extend({
   el: '.container',
   events: {
-    // 'submit form': 'submitForm',
-    // 'button .edit': 'editMovie'
+
   },
-  // submitForm: function (event) {
-  //   event.preventDefault();
-  //   var newMovie = {
-  //     title: this.$el.find('input[name="title"]').val(),
-  //     release: this.$el.find('input[name="release"]').val(),
-  //     cover_url: this.$el.find('input[name="cover_url"]').val(),
-  //     plot: this.$el.find('input[name="plot"]').val(),
-  //     rating: this.$el.find('input[name="rating"]').val(),
-  //   };
-  //   var newModel = new ImdbModel(newMovie);
-  //   newModel.save();
-  //   this.collection.add(newModel);
-  //   this.addOne(newModel);
-  // },
+
   initialize: function () {
   this.addAll();
   },
@@ -126,10 +112,6 @@ module.exports = Backbone.View.extend({
 
   },
 
- // editMovie: function(){
- //   var _id = this.model.attributes._id;
- //   this.model.
- // }
 });
 
 },{"./imdbModelView":7,"backbone":10,"jquery":11,"underscore":12}],6:[function(require,module,exports){
@@ -235,20 +217,6 @@ module.exports = Backbone.View.extend({
 });
 
 },{"./footerView":1,"./formView":2,"./headerView":3,"./imdbCollection":4,"./imdbCollectionView":5,"backbone":10,"jquery":11,"underscore":12}],9:[function(require,module,exports){
-// var $ = require('jquery');
-// var ImdbCollection = require('./imdbCollection');
-// var ImdbCollectionView = require('./imdbCollectionView');
-//
-// $(function () {
-//   var moviesImdb = new ImdbCollection();
-//
-//   moviesImdb.fetch().then(function (data) {
-//     console.log("these are the photos: ", moviesImdb);
-//     new ImdbCollectionView({collection: moviesImdb});
-//
-//   });
-// })
-
 
 var $ = require('jquery');
 var layoutView = require('./layoutView');

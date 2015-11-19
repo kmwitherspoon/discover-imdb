@@ -7,23 +7,9 @@ var ImdbModelView = require('./imdbModelView');
 module.exports = Backbone.View.extend({
   el: '.container',
   events: {
-    // 'submit form': 'submitForm',
-    // 'button .edit': 'editMovie'
+
   },
-  // submitForm: function (event) {
-  //   event.preventDefault();
-  //   var newMovie = {
-  //     title: this.$el.find('input[name="title"]').val(),
-  //     release: this.$el.find('input[name="release"]').val(),
-  //     cover_url: this.$el.find('input[name="cover_url"]').val(),
-  //     plot: this.$el.find('input[name="plot"]').val(),
-  //     rating: this.$el.find('input[name="rating"]').val(),
-  //   };
-  //   var newModel = new ImdbModel(newMovie);
-  //   newModel.save();
-  //   this.collection.add(newModel);
-  //   this.addOne(newModel);
-  // },
+
   initialize: function () {
   this.addAll();
   },
@@ -36,8 +22,4 @@ module.exports = Backbone.View.extend({
 
   },
 
- // editMovie: function(){
- //   var _id = this.model.attributes._id;
- //   this.model.
- // }
 });
